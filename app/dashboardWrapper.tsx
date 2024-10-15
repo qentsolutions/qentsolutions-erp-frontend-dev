@@ -1,6 +1,5 @@
 "use client";
 
-import { AuthProvider } from "./authContext";
 import Navbar from "./portal/components/navbar";
 
 
@@ -22,9 +21,7 @@ const PortalLayout = ({ children }: { children: React.ReactNode }) => {
 
 const DashboardWrapper = ({ children }: { children: React.ReactNode }) => {
     return (
-        <AuthProvider>
-            <PortalLayout>{children}</PortalLayout>
-        </AuthProvider>
+        <PortalLayout>{children}</PortalLayout>
     );
 };
 

@@ -100,8 +100,6 @@ const Navbar = () => {
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleSignOut}>
                 <LogoutButton />
-                <LogOut className="mr-2 h-4 w-4 text-red-500" />
-                <span>Log out</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

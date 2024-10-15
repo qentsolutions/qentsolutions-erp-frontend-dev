@@ -21,7 +21,7 @@ async function getSigningKey(kid: any) {
     throw new Error("No keys found in JWKS response");
   }
 
-  const key = jwks.keys.find((key: { kid: any; }) => key.kid === kid);
+  const key = jwks.keys.find((key: { kid: any }) => key.kid === kid);
 
   if (!key) {
     throw new Error("Key not found");

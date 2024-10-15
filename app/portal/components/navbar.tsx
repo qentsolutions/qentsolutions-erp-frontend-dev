@@ -4,6 +4,7 @@ import Link from "next/link";
 import { signOut } from "aws-amplify/auth";
 import { useRouter, useSearchParams } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import LogoutButton from "./logout";
 
 const Navbar = () => {
   const router = useRouter();
@@ -98,6 +99,7 @@ const Navbar = () => {
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleSignOut}>
+                <LogoutButton />
                 <LogOut className="mr-2 h-4 w-4 text-red-500" />
                 <span>Log out</span>
               </DropdownMenuItem>
@@ -111,10 +113,10 @@ const Navbar = () => {
         <div className="absolute top-16 left-0 w-full bg-white shadow-lg">
           <ul>
             <li>
-              <Link href="/dashboard/conversation/new" className="block p-2 hover:bg-gray-100">New Message</Link>
+              <Link href="/portal/conversation/new" className="block p-2 hover:bg-gray-100">New Message</Link>
             </li>
             <li>
-              <Link href="/dashboard/conversation/archive" className="block p-2 hover:bg-gray-100">Archived Messages</Link>
+              <Link href="/portal/conversation/archive" className="block p-2 hover:bg-gray-100">Archived Messages</Link>
             </li>
           </ul>
         </div>

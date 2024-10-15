@@ -179,7 +179,7 @@ export const Navbar = () => {
           </div>
 
           <div className="flex items-center space-x-4">
-            <Link href="/dashboard">
+            <Link href="/portal">
               <Button size="sm" className="bg-blue-600">
                 Get started
               </Button>

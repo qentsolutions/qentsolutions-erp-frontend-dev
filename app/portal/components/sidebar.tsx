@@ -29,10 +29,10 @@ export const Sidebar = ({ isCollapsed, onToggle }: { isCollapsed: boolean; onTog
                 </button>
             </div>
             <div className="flex flex-col w-full h-full text-sm p-4 space-y-2">
-                <NavItem href="/dashboard" icon={<HomeIcon size={30} />} label="Home" isCollapsed={isCollapsed} />
-                <NavItem href="/dashboard/calendar" icon={<Calendar size={30} />} label="Calendar" isCollapsed={isCollapsed} />
+                <NavItem href="/portal" icon={<HomeIcon size={30} />} label="Home" isCollapsed={isCollapsed} />
+                <NavItem href="/portal/calendar" icon={<Calendar size={30} />} label="Calendar" isCollapsed={isCollapsed} />
                 <NavItem href="/leads" icon={<Users2Icon size={30} />} label="Leads" isCollapsed={isCollapsed} />
-                <NavItem href="/dashboard/conversation" icon={<Send size={30} />} label="Messages" isCollapsed={isCollapsed} />
+                <NavItem href="/portal/conversation" icon={<Send size={30} />} label="Messages" isCollapsed={isCollapsed} />
 
                 {/* Menu Recrutement */}
                 <div className={`mb-2 flex items-center ${isCollapsed ? 'justify-center' : ''}`}>
@@ -54,9 +54,9 @@ export const Sidebar = ({ isCollapsed, onToggle }: { isCollapsed: boolean; onTog
                 {/* Sous-menus Recrutement */}
                 {isRecruitmentOpen && (
                     <>
-                        <NavItem href="/dashboard/recruitment/job-offers" icon={<Briefcase />} label="Job Offers" isCollapsed={isCollapsed} indent />
-                        <NavItem href="/dashboard/recruitment/job-applications" icon={<Sheet  />} label="Job Applications" isCollapsed={isCollapsed} indent />
-                        <NavItem href="/dashboard/recruitment/candidates" icon={<Users  />} label="Candidates" isCollapsed={isCollapsed} indent />
+                        <NavItem href="/portal/recruitment/job-offers" icon={<Briefcase />} label="Job Offers" isCollapsed={isCollapsed} indent />
+                        <NavItem href="/portal/recruitment/job-applications" icon={<Sheet  />} label="Job Applications" isCollapsed={isCollapsed} indent />
+                        <NavItem href="/portal/recruitment/candidates" icon={<Users  />} label="Candidates" isCollapsed={isCollapsed} indent />
                     </>
                 )}
             </div>

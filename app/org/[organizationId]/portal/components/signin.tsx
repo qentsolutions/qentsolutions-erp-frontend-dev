@@ -18,12 +18,17 @@ const Signin = () => {
         e.preventDefault();
         try {
             // API call for sign-in
-            await axios.post("http://localhost:3000/api/users/signin", {
+            const response = await axios.post("http://localhost:3000/api/connection/signin", {
                 username,
                 password,
             }, {
                 withCredentials: true, // Allows sending cookies
             });
+
+            // Stocker le cognitoId dans le localStorage
+            const { cognitoId } = response.data; // Assurez-vous que votre réponse inclut le cognitoId
+            localStorage.setItem("qsid", cognitoId);
+
             setMessage("Sign in successful");
             router.push("/portal");
         } catch (error: any) {
@@ -32,7 +37,7 @@ const Signin = () => {
     };
 
     return (
-        <div className=" flex items-center justify-center">
+        <div className="flex items-center justify-center">
             <Card className="w-[350px]">
                 <CardHeader>
                     <CardTitle>Sign In</CardTitle>

@@ -1,6 +1,6 @@
 // app/conversation/layout.tsx
 import React from "react";
-import WeeklyCalendar from "../../components/weekly-calendar";
+import WeeklyCalendar from "../portal/components/weekly-calendar";
 
 export default function CalendarPage() {
   return (

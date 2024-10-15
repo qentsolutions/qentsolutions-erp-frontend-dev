@@ -1,6 +1,6 @@
 "use client";
 
-import Navbar from "./portal/components/navbar";
+import Navbar from "./org/[organizationId]/portal/components/navbar";
 
 
 

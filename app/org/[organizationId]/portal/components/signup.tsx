@@ -55,7 +55,7 @@ const Signup: React.FC<SignupProps> = ({ onVerified }) => {
     const handleSignup = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:3000/api/users/signup", {
+            const response = await axios.post("http://localhost:3000/api/connection/signup", {
                 username,
                 password,
                 email,
@@ -89,7 +89,7 @@ const Signup: React.FC<SignupProps> = ({ onVerified }) => {
         e.preventDefault();
         const code = confirmationCode.join('');
         try {
-            await axios.post("http://localhost:3000/api/users/confirm-signup", {
+            await axios.post("http://localhost:3000/api/connection/confirm-signup", {
                 confirmationCode: code,
                 username,
             });

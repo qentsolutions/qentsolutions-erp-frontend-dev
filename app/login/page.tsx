@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import Signin from "../portal/components/signin";
-import Signup from "../portal/components/signup";
+import Signin from "../org/[organizationId]/portal/components/signin";
+import Signup from "../org/[organizationId]/portal/components/signup";
 import { Navbar } from "../(marketing)/components/navbar";
 
 const Home: React.FC = () => {

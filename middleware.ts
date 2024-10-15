@@ -1,19 +1,9 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { jwtVerify, importJWK } from "jose";
+import { jwtVerify, importJWK, JWK } from "jose"; // Importer JWK depuis 'jose'
 
 // URL pour récupérer les clés JWKS de Cognito
 const JWKS_URI = `https://cognito-idp.eu-west-3.amazonaws.com/${process.env.NEXT_PUBLIC_COGNITO_USER_POOL_ID}/.well-known/jwks.json`;
-
-// Définir le type pour la clé JWK
-interface JWK {
-  kty: string; // Type de clé
-  kid: string; // Identifiant de clé
-  use: string; // Utilisation de la clé
-  alg: string; // Algorithme
-  n: string; // Modulus
-  e: string; // Exponent
-}
 
 // Fonction pour obtenir la clé de vérification JWT
 async function getSigningKey(kid: string): Promise<JWK> {

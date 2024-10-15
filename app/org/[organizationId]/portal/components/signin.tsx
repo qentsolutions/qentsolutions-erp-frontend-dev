@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import toast from "react-hot-toast";
 
 const Signin = () => {
     const [username, setUsername] = useState("");
@@ -29,7 +30,7 @@ const Signin = () => {
             const { cognitoId } = response.data; // Assurez-vous que votre réponse inclut le cognitoId
             localStorage.setItem("qsid", cognitoId);
 
-            setMessage("Sign in successful");
+            toast.success("Connected !")
             router.push("/portal");
         } catch (error: any) {
             setMessage(error.response?.data?.error || "Sign in failed");

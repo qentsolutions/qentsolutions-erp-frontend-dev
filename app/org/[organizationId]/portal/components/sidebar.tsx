@@ -14,9 +14,9 @@ export const Sidebar = ({ isCollapsed, onToggle }: { isCollapsed: boolean; onTog
     const [isInOrganization, setIsInOrganization] = useState(false);
     const [organizationId, setOrganizationId] = useState<string | null>(null);
     const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null); // État pour le sous-menu actif
+    const [activeMainMenu, setActiveMainMenu] = useState<string | null>(null); // État pour le menu principal
 
     useEffect(() => {
-        // Lire le module actif à partir du localStorage
         const storedActiveModule = localStorage.getItem("activeModule");
         if (storedActiveModule) {
             setActiveModule(storedActiveModule);
@@ -37,7 +37,6 @@ export const Sidebar = ({ isCollapsed, onToggle }: { isCollapsed: boolean; onTog
                     console.error("Error fetching user organization:", error);
                 }
             }
-            // Simuler un temps de chargement de 2 secondes
             setTimeout(() => {
                 setLoading(false);
             }, 2000);
@@ -56,6 +55,7 @@ export const Sidebar = ({ isCollapsed, onToggle }: { isCollapsed: boolean; onTog
 
     const handleModuleSelect = (module: string, href: string) => {
         setActiveModule(module); // Définir le module actif
+        setActiveMainMenu(module); // Définir le menu principal actif
         localStorage.setItem("activeModule", module); // Enregistrer dans localStorage
         router.push(href); // Navigation vers le lien correspondant
     };
@@ -66,12 +66,12 @@ export const Sidebar = ({ isCollapsed, onToggle }: { isCollapsed: boolean; onTog
 
     return (
         <div className={`h-full border-r flex flex-col overflow-y-auto bg-white shadow-lg transition-width duration-300 ${isCollapsed ? 'w-16' : 'w-64'}`}>
-            <div className="flex items-center justify-between p-4 bg-gray-100">
+            <div className="flex items-center justify-between p-4 ">
                 <DropdownMenu>
-                    <DropdownMenuTrigger className={`text-md font-bold ${isCollapsed ? 'hidden' : 'block'}`} onClick={onToggle}>
+                    <DropdownMenuTrigger className={`text-md font-bold hover:text-blue-500 ${isCollapsed ? 'hidden' : 'block'}`} onClick={onToggle}>
                         {<Grip />}
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="grid grid-cols-3 gap-2 w-3/4">
+                    <DropdownMenuContent className="grid grid-cols-3 gap-2 w-3/4 mt-4">
                         <DropdownMenuItem className="flex items-center justify-center p-4" onClick={() => handleModuleSelect("Home", "/portal")}>
                             <div className="flex flex-col items-center space-y-2 text-blue-500">
                                 <HomeIcon size={25} />
@@ -120,48 +120,43 @@ export const Sidebar = ({ isCollapsed, onToggle }: { isCollapsed: boolean; onTog
                     {isCollapsed ? <ChevronRight /> : <ChevronLeft />}
                 </button>
             </div>
-
+            <Separator />
             <div className="flex flex-col w-full h-full text-sm p-4 space-y-2">
-                {/* Main Links */}
-                <Link href="/portal" className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200">
-                    <HomeIcon size={30} />
-                    <span className={`ml-4 block text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Home</span>
+                <Link href={`/org/${organizationId}/portal/calendar`}
+                    className={`flex items-center p-2 rounded hover:text-blue-500 transition duration-200 
+                        ${activeMainMenu === "Calendar" ? 'text-blue-500 bg-blue-50' : 'text-gray-800'}`}
+                    onClick={() => { setActiveMainMenu("Calendar"); setActiveSubMenu(null); }}
+                >
+                    <Calendar size={25} />
+                    <span className={`ml-4 block text-gray-800 text-xs ${isCollapsed ? 'hidden' : 'block'}`}>Calendar</span>
                 </Link>
-                <Link href="/portal/calendar" className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200">
-                    <Calendar size={30} />
-                    <span className={`ml-4 block text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Calendar</span>
+                <Link href={`/org/${organizationId}/portal/conversation`}
+                    className={`flex items-center p-2 rounded hover:text-blue-500 transition duration-200 
+                        ${activeMainMenu === "Messages" ? 'text-blue-500 bg-blue-50' : 'text-gray-800'}`}
+                    onClick={() => { setActiveMainMenu("Messages"); setActiveSubMenu(null); }}
+                >
+                    <Send size={25} />
+                    <span className={`ml-4 block text-xs text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Messages</span>
                 </Link>
-                <Link href="/portal/conversation" className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200">
-                    <Send size={30} />
-                    <span className={`ml-4 block text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Messages</span>
-                </Link>
-
+                <Separator />
                 {/* Sous-menu dynamique selon le module sélectionné */}
                 {activeModule === "Human Resources" && (
                     <>
                         <Link
+                            href={`/org/${organizationId}/portal/hr/employees`}
+                            className={`flex items-center p-2 rounded hover:text-blue-500 transition duration-200 ${activeSubMenu === "Employees" ? 'text-blue-500 bg-blue-50' : 'text-gray-800'}`}
+                            onClick={() => { handleSubMenuSelect("Employees"); setActiveMainMenu(null); }}
+                        >
+                            <Users2Icon />
+                            <span className={`ml-4 block text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Employees</span>
+                        </Link>
+                        <Link
                             href={`/org/${organizationId}/portal/hr/recruitment`}
                             className={`flex items-center p-2 rounded hover:text-blue-500 transition duration-200 ${activeSubMenu === "Recruitment" ? 'text-blue-500 bg-blue-50' : 'text-gray-800'}`}
-                            onClick={() => handleSubMenuSelect("Recruitment")}
+                            onClick={() => { handleSubMenuSelect("Recruitment"); setActiveMainMenu(null); }} // Réinitialiser le menu principal si un sous-menu est sélectionné
                         >
                             <Briefcase />
-                            <span className={` block ml-4 ${isCollapsed ? 'hidden' : 'block'}`}>Recruitment</span>
-                        </Link>
-                        <Link
-                            href={`/org/${organizationId}/portal/hr/employees`}
-                            className={`flex items-center p-2 rounded hover:text-blue-500 transition duration-200 ${activeSubMenu === "Employees" ? 'text-blue-500 bg-blue-50' : 'text-gray-800'}`}  // Changed condition here
-                            onClick={() => handleSubMenuSelect("Employees")}
-                        >
-                            <Briefcase />
-                            <span className={` block ml-4 ${isCollapsed ? 'hidden' : 'block'}`}>Employees</span>
-                        </Link>
-                        <Link
-                            href={`/org/${organizationId}/portal/hr/absence`}
-                            className={`flex items-center p-2 rounded hover:text-blue-500 transition duration-200 ${activeSubMenu === "Absence" ? 'text-blue-500 bg-blue-50' : 'text-gray-800'}`} // Changed condition here
-                            onClick={() => handleSubMenuSelect("Absence")}
-                        >
-                            <Briefcase />
-                            <span className={` block ml-4 ${isCollapsed ? 'hidden' : 'block'}`}>Absence</span>
+                            <span className={`ml-4 block text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Recruitment</span>
                         </Link>
                     </>
                 )}

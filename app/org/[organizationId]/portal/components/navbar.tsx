@@ -2,7 +2,7 @@ import React from "react";
 import { CreditCard, Keyboard, LogOut, Mail, MessageSquare, Plus, Search, Settings, User, UserPlus, Users } from "lucide-react";
 import Link from "next/link";
 import { signOut } from "aws-amplify/auth";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import LogoutButton from "./logout";
 
@@ -10,6 +10,8 @@ const Navbar = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isConversationPath = searchParams.get("path") === "dashboard/conversation"; // Exemple d'utilisation
+  const params = useParams(); // Pour récupérer les paramètres dynamiques de l'URL
+  const organizationId = params.organizationId; // Récupérer organizationId depuis l'URL
 
   const handleSignOut = async () => {
     try {
@@ -17,6 +19,10 @@ const Navbar = () => {
     } catch (error) {
       console.error("Error signing out: ", error);
     }
+  };
+
+  const handleRoutePush = (route:string) => {
+    router.push(`/org/${organizationId}/portal/${route}`);
   };
 
   return (
@@ -45,7 +51,7 @@ const Navbar = () => {
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleRoutePush("profile")}>
                   <User className="mr-2 h-4 w-4" />
                   <span>Profile</span>
                   <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
@@ -60,41 +66,12 @@ const Navbar = () => {
                   <span>Settings</span>
                   <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Keyboard className="mr-2 h-4 w-4" />
-                  <span>Keyboard shortcuts</span>
-                  <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-                </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleRoutePush("organization")}>
                   <Users className="mr-2 h-4 w-4" />
-                  <span>Team</span>
-                </DropdownMenuItem>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>
-                    <UserPlus className="mr-2 h-4 w-4" />
-                    <span>Invite users</span>
-                  </DropdownMenuSubTrigger>
-                  <DropdownMenuPortal>
-                    <DropdownMenuSubContent>
-                      <DropdownMenuItem>
-                        <Mail className="mr-2 h-4 w-4" />
-                        <span>Email</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <MessageSquare className="mr-2 h-4 w-4" />
-                        <span>Message</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                    </DropdownMenuSubContent>
-                  </DropdownMenuPortal>
-                </DropdownMenuSub>
-                <DropdownMenuItem>
-                  <Plus className="mr-2 h-4 w-4" />
-                  <span>New Team</span>
-                  <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+                  <span>Organization</span>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />

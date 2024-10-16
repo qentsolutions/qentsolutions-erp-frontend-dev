@@ -16,7 +16,7 @@ const OrgPage = () => {
                     router.push("/login");
                     return;
                 }
-
+                
                 // Appel à l'API pour obtenir les données utilisateur avec les cookies de session
                 const response = await axios.get(`http://localhost:3000/api/user/${cognitoId}`, {
                     withCredentials: true, // Assure l'envoi des cookies de session
@@ -26,7 +26,7 @@ const OrgPage = () => {
                 // Vérifiez si l'utilisateur a une organisation
                 if (userData.organizationId) {
                     // Rediriger vers la page de l'organisation
-                    router.push(`/portal/org/${userData.organizationId}`);
+                    router.push(`/org/${userData.organizationId}/portal`);
                 } else {
                     // Rediriger vers la page pour rejoindre ou créer une organisation
                     router.push("/portal/org/join-or-create");

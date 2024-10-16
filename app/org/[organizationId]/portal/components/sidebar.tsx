@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { signOut } from "aws-amplify/auth";
-import { ChevronLeft, ChevronRight, HomeIcon, Users2Icon, MessageCircle, Send, Calendar, Briefcase, Users, Sheet, Grip } from "lucide-react";
+import { ChevronLeft, ChevronRight, HomeIcon, Users2Icon, MessageCircle, Send, Calendar, Briefcase, Users, Sheet, Grip, DollarSignIcon, ShoppingCartIcon, UsersIcon, MegaphoneIcon, BriefcaseIcon, CheckSquareIcon } from "lucide-react";
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
 
 export const Sidebar = ({ isCollapsed, onToggle }: { isCollapsed: boolean; onToggle: () => void }) => {
     const router = useRouter();
@@ -12,8 +13,15 @@ export const Sidebar = ({ isCollapsed, onToggle }: { isCollapsed: boolean; onTog
     const [loading, setLoading] = useState(true);
     const [isInOrganization, setIsInOrganization] = useState(false);
     const [organizationId, setOrganizationId] = useState<string | null>(null);
+    const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null); // État pour le sous-menu actif
 
     useEffect(() => {
+        // Lire le module actif à partir du localStorage
+        const storedActiveModule = localStorage.getItem("activeModule");
+        if (storedActiveModule) {
+            setActiveModule(storedActiveModule);
+        }
+
         const checkUserOrganization = async () => {
             const cognitoId = localStorage.getItem("qsid");
             if (cognitoId) {
@@ -47,61 +55,63 @@ export const Sidebar = ({ isCollapsed, onToggle }: { isCollapsed: boolean; onTog
     };
 
     const handleModuleSelect = (module: string, href: string) => {
-        setActiveModule(prev => prev === module ? null : module); // Basculer l'état du module actif
+        setActiveModule(module); // Définir le module actif
+        localStorage.setItem("activeModule", module); // Enregistrer dans localStorage
         router.push(href); // Navigation vers le lien correspondant
+    };
+
+    const handleSubMenuSelect = (subMenu: string) => {
+        setActiveSubMenu(subMenu); // Définir le sous-menu actif
     };
 
     return (
         <div className={`h-full border-r flex flex-col overflow-y-auto bg-white shadow-lg transition-width duration-300 ${isCollapsed ? 'w-16' : 'w-64'}`}>
             <div className="flex items-center justify-between p-4 bg-gray-100">
                 <DropdownMenu>
-                    <DropdownMenuTrigger className={`text-lg font-bold ${isCollapsed ? 'hidden' : 'block'}`} onClick={onToggle}>
+                    <DropdownMenuTrigger className={`text-md font-bold ${isCollapsed ? 'hidden' : 'block'}`} onClick={onToggle}>
                         {<Grip />}
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56">
-                        <DropdownMenuLabel>Modules</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={() => handleModuleSelect("Home", "/portal")}>
-                            <div className="flex items-center">
-                                <HomeIcon size={16} />
-                                <span className="ml-2">Home</span>
+                    <DropdownMenuContent className="grid grid-cols-3 gap-2 w-3/4">
+                        <DropdownMenuItem className="flex items-center justify-center p-4" onClick={() => handleModuleSelect("Home", "/portal")}>
+                            <div className="flex flex-col items-center space-y-2 text-blue-500">
+                                <HomeIcon size={25} />
+                                <span className="text-xs font-semibold">Home</span>
                             </div>
                         </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem className="h-12" onClick={() => handleModuleSelect("Finance", `/org/${organizationId}/portal/finance`)}>
-                            <div className="flex items-center">
-                                <Briefcase size={16} />
-                                <span className="ml-2">Finance</span>
+                        <DropdownMenuItem className="flex items-center justify-center p-4" onClick={() => handleModuleSelect("Finance", `/org/${organizationId}/portal/finance`)}>
+                            <div className="flex flex-col items-center space-y-2 text-green-500">
+                                <DollarSignIcon size={25} />
+                                <span className="text-xs font-semibold">Finance</span>
                             </div>
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="h-12" onClick={() => handleModuleSelect("Sales", `/org/${organizationId}/portal/sales`)}>
-                            <div className="flex items-center">
-                                <Users2Icon size={16} />
-                                <span className="ml-2">Sales</span>
+                        <DropdownMenuItem className="flex items-center justify-center p-4" onClick={() => handleModuleSelect("Sales", `/org/${organizationId}/portal/sales`)}>
+                            <div className="flex flex-col items-center space-y-2 text-yellow-500">
+                                <ShoppingCartIcon size={25} />
+                                <span className="text-xs font-semibold">Sales</span>
                             </div>
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="h-12" onClick={() => handleModuleSelect("Human Resources", `/org/${organizationId}/portal/hr`)}>
-                            <div className="flex items-center">
-                                <Users size={16} />
-                                <span className="ml-2">Human Resources</span>
+                        <DropdownMenuItem className="flex items-center justify-center p-4" onClick={() => handleModuleSelect("Human Resources", `/org/${organizationId}/portal/hr`)}>
+                            <div className="flex flex-col items-center space-y-2 text-red-500">
+                                <UsersIcon size={25} />
+                                <span className="text-xs font-semibold">HR</span>
                             </div>
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="h-12" onClick={() => handleModuleSelect("Marketing", `/org/${organizationId}/portal/marketing`)}>
-                            <div className="flex items-center">
-                                <Users2Icon size={16} />
-                                <span className="ml-2">Marketing</span>
+                        <DropdownMenuItem className="flex items-center justify-center p-4" onClick={() => handleModuleSelect("Marketing", `/org/${organizationId}/portal/marketing`)}>
+                            <div className="flex flex-col items-center space-y-2 text-purple-500">
+                                <MegaphoneIcon size={25} />
+                                <span className="text-xs font-semibold">Marketing</span>
                             </div>
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="h-12" onClick={() => handleModuleSelect("Services", `/org/${organizationId}/portal/services`)}>
-                            <div className="flex items-center">
-                                <Users2Icon size={16} />
-                                <span className="ml-2">Services</span>
+                        <DropdownMenuItem className="flex items-center justify-center p-4" onClick={() => handleModuleSelect("Services", `/org/${organizationId}/portal/services`)}>
+                            <div className="flex flex-col items-center space-y-2 text-indigo-500">
+                                <BriefcaseIcon size={25} />
+                                <span className="text-xs font-semibold">Services</span>
                             </div>
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="h-12" onClick={() => handleModuleSelect("Productivity", `/org/${organizationId}/portal/productivity`)}>
-                            <div className="flex items-center">
-                                <Users2Icon size={16} />
-                                <span className="ml-2">Productivity</span>
+                        <DropdownMenuItem className="flex items-center justify-center p-4" onClick={() => handleModuleSelect("Productivity", `/org/${organizationId}/portal/productivity`)}>
+                            <div className="flex flex-col items-center space-y-2 text-teal-500">
+                                <CheckSquareIcon size={25} />
+                                <span className="text-xs font-semibold">Productivity</span>
                             </div>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -110,93 +120,92 @@ export const Sidebar = ({ isCollapsed, onToggle }: { isCollapsed: boolean; onTog
                     {isCollapsed ? <ChevronRight /> : <ChevronLeft />}
                 </button>
             </div>
+
             <div className="flex flex-col w-full h-full text-sm p-4 space-y-2">
-                <a href="/portal" className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200">
+                {/* Main Links */}
+                <Link href="/portal" className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200">
                     <HomeIcon size={30} />
                     <span className={`ml-4 block text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Home</span>
-                </a>
-                <a href="/portal/calendar" className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200">
+                </Link>
+                <Link href="/portal/calendar" className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200">
                     <Calendar size={30} />
                     <span className={`ml-4 block text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Calendar</span>
-                </a>
-
-                <a href="/portal/conversation" className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200">
+                </Link>
+                <Link href="/portal/conversation" className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200">
                     <Send size={30} />
                     <span className={`ml-4 block text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Messages</span>
-                </a>
+                </Link>
 
                 {/* Sous-menu dynamique selon le module sélectionné */}
                 {activeModule === "Human Resources" && (
                     <>
-                        <a href={`/org/${organizationId}/portal/hr/job-offers`} className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200 ">
+                        <Link
+                            href={`/org/${organizationId}/portal/hr/recruitment`}
+                            className={`flex items-center p-2 rounded hover:text-blue-500 transition duration-200 ${activeSubMenu === "Recruitment" ? 'text-blue-500 bg-blue-50' : 'text-gray-800'}`}
+                            onClick={() => handleSubMenuSelect("Recruitment")}
+                        >
                             <Briefcase />
-                            <span className={` block text-gray-800 ml-4 ${isCollapsed ? 'hidden' : 'block'}`}>Job Offers</span>
-                        </a>
-                        <a href={`/org/${organizationId}/portal/hr/job-applications`} className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200 ">
-                            <Sheet />
-                            <span className={` block text-gray-800 ml-4 ${isCollapsed ? 'hidden' : 'block'}`}>Job Applications</span>
-                        </a>
-                        <a href={`/org/${organizationId}/portal/hr/candidates`} className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200 ">
-                            <Users />
-                            <span className={` block text-gray-800 ml-4 ${isCollapsed ? 'hidden' : 'block'}`}>Candidates</span>
-                        </a>
+                            <span className={` block ml-4 ${isCollapsed ? 'hidden' : 'block'}`}>Recruitment</span>
+                        </Link>
+                        <Link
+                            href={`/org/${organizationId}/portal/hr/employees`}
+                            className={`flex items-center p-2 rounded hover:text-blue-500 transition duration-200 ${activeSubMenu === "Employees" ? 'text-blue-500 bg-blue-50' : 'text-gray-800'}`}  // Changed condition here
+                            onClick={() => handleSubMenuSelect("Employees")}
+                        >
+                            <Briefcase />
+                            <span className={` block ml-4 ${isCollapsed ? 'hidden' : 'block'}`}>Employees</span>
+                        </Link>
+                        <Link
+                            href={`/org/${organizationId}/portal/hr/absence`}
+                            className={`flex items-center p-2 rounded hover:text-blue-500 transition duration-200 ${activeSubMenu === "Absence" ? 'text-blue-500 bg-blue-50' : 'text-gray-800'}`} // Changed condition here
+                            onClick={() => handleSubMenuSelect("Absence")}
+                        >
+                            <Briefcase />
+                            <span className={` block ml-4 ${isCollapsed ? 'hidden' : 'block'}`}>Absence</span>
+                        </Link>
                     </>
                 )}
+
                 {activeModule === "Sales" && (
-                    <>
-                        <a href={`/org/${organizationId}/portal/sales/leads`} className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200 ">
-                            <Users2Icon />
-                            <span className={` block text-gray-800 ml-4 ${isCollapsed ? 'hidden' : 'block'}`}>Leads</span>
-                        </a>
-                        <a href={`/org/${organizationId}/portal/sales/reports`} className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200 ">
-                            <Users2Icon />
-                            <span className={` block text-gray-800 ml-4 ${isCollapsed ? 'hidden' : 'block'}`}>Sales Reports</span>
-                        </a>
-                    </>
+                    <Link
+                        href={`/org/${organizationId}/portal/sales/leads`}
+                        className={`flex items-center p-2 rounded hover:bg-gray-200 transition duration-200 ${activeSubMenu === "Leads" ? 'text-blue-500' : 'text-gray-800'}`}
+                        onClick={() => handleSubMenuSelect("Leads")}
+                    >
+                        <Users2Icon />
+                        <span className={` block ml-4 ${isCollapsed ? 'hidden' : 'block'}`}>Leads</span>
+                    </Link>
                 )}
                 {activeModule === "Finance" && (
-                    <>
-                        <a href={`/org/${organizationId}/portal/finance/accounting`} className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200">
-                            <Briefcase />
-                            <span className={`ml-4 block text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Accounting</span>
-                        </a>
-                        <a href={`/org/${organizationId}/portal/finance/billing`} className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200">
-                            <Sheet />
-                            <span className={`ml-4 block text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Billing</span>
-                        </a>
-                        <a href={`/org/${organizationId}/portal/finance/expenses`} className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200">
-                            <Briefcase />
-                            <span className={`ml-4 block text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Expenses</span>
-                        </a>
-                        <a href={`/org/${organizationId}/portal/finance/documents`} className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200">
-                            <Sheet />
-                            <span className={`ml-4 block text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Documents</span>
-                        </a>
-                    </>
+                    <Link
+                        href={`/org/${organizationId}/portal/finance/reports`}
+                        className={`flex items-center p-2 rounded hover:bg-gray-200 transition duration-200 ${activeSubMenu === "Reports" ? 'text-blue-500' : 'text-gray-800'}`}
+                        onClick={() => handleSubMenuSelect("Reports")}
+                    >
+                        <Sheet />
+                        <span className={` block ml-4 ${isCollapsed ? 'hidden' : 'block'}`}>Reports</span>
+                    </Link>
                 )}
                 {activeModule === "Marketing" && (
-                    <>
-                        <a href={`/org/${organizationId}/portal/marketing/events`} className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200">
-                            <Users2Icon />
-                            <span className={`ml-4 block text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Events</span>
-                        </a>
-                        <a href={`/org/${organizationId}/portal/marketing/surveys`} className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200">
-                            <Sheet />
-                            <span className={`ml-4 block text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Surveys</span>
-                        </a>
-                        <a href={`/org/${organizationId}/portal/marketing/automation`} className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200">
-                            <Briefcase />
-                            <span className={`ml-4 block text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Marketing Automation</span>
-                        </a>
-                    </>
+                    <Link
+                        href={`/org/${organizationId}/portal/marketing/ads`}
+                        className={`flex items-center p-2 rounded hover:bg-gray-200 transition duration-200 ${activeSubMenu === "Ads" ? 'text-blue-500' : 'text-gray-800'}`}
+                        onClick={() => handleSubMenuSelect("Ads")}
+                    >
+                        <MegaphoneIcon />
+                        <span className={` block ml-4 ${isCollapsed ? 'hidden' : 'block'}`}>Ads</span>
+                    </Link>
                 )}
-            </div>
-            <Separator className="my-4" />
-            <div className="mt-auto mb-4">
-                <button onClick={handleSignOut} className="flex items-center p-2 rounded hover:bg-gray-200 transition duration-200 w-full">
-                    <Users2Icon size={30} />
-                    <span className={`ml-4 block text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Sign Out</span>
-                </button>
+                {activeModule === "Productivity" && (
+                    <Link
+                        href={`/org/${organizationId}/portal/productivity/tasks`}
+                        className={`flex items-center p-2 rounded hover:bg-gray-200 transition duration-200 ${activeSubMenu === "Tasks" ? 'text-blue-500' : 'text-gray-800'}`}
+                        onClick={() => handleSubMenuSelect("Tasks")}
+                    >
+                        <CheckSquareIcon />
+                        <span className={` block ml-4 ${isCollapsed ? 'hidden' : 'block'}`}>Tasks</span>
+                    </Link>
+                )}
             </div>
         </div>
     );

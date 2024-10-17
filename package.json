@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^6.5.0",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "@headlessui/react": "^2.1.8",
     "@hello-pangea/dnd": "^17.0.0",
     "@prisma/client": "^5.19.1",
@@ -54,6 +56,7 @@
     "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.9",
     "@types/jsonexport": "^3.0.5",
     "@types/node": "^20.16.5",
     "@types/react": "^18",

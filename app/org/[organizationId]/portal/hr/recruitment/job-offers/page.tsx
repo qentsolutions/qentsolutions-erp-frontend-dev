@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 
 // Define the job offer type
 type JobOffer = {
@@ -211,9 +212,12 @@ export default function JobOffers() {
                             ))}
                         </SelectContent>
                     </Select>
-                    <Button>
-                        <Plus className="mr-2 h-4 w-4" /> Add New Job Offer
-                    </Button>
+                    <Link href={`${window.location.pathname}/add`}>
+                        <Button>
+                            <Plus className="mr-2 h-4 w-4" /> Add New Job Offer
+                        </Button>
+                    </Link>
+
                 </div>
             </div>
             <DragDropContext onDragEnd={onDragEnd}>

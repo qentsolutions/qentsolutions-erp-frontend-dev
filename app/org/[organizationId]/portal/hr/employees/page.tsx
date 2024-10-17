@@ -2,11 +2,11 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import Image from "next/image";
-import { ChevronLeft, History, Mail, Phone } from "lucide-react";
+import { ChevronLeft, Clock, History, Mail, Phone } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProfessionalInfo from "./components/professional";
@@ -23,6 +23,15 @@ const employees = [
         phone: "+1 234 567 890",
         photo: "/placeholder.svg?height=100&width=100",
         department: "Engineering",
+        history: [
+            { date: "2023-05-15", event: "Applied for Senior Developer position" },
+            { date: "2023-05-20", event: "Resume screened and approved" },
+            { date: "2023-05-25", event: "First interview scheduled" },
+            { date: "2023-06-01", event: "First interview completed - Positive feedback" },
+            { date: "2023-06-10", event: "Second interview scheduled" },
+            { date: "2023-06-15", event: "Second interview completed - Highly recommended" },
+            { date: "2023-06-20", event: "Offer sent" },
+        ]
     },
     {
         id: 2,
@@ -33,6 +42,15 @@ const employees = [
         phone: "+1 234 567 891",
         photo: "/placeholder.svg?height=100&width=100",
         department: "Product",
+        history: [
+            { date: "2023-05-15", event: "Applied for Senior Developer position" },
+            { date: "2023-05-20", event: "Resume screened and approved" },
+            { date: "2023-05-25", event: "First interview scheduled" },
+            { date: "2023-06-01", event: "First interview completed - Positive feedback" },
+            { date: "2023-06-10", event: "Second interview scheduled" },
+            { date: "2023-06-15", event: "Second interview completed - Highly recommended" },
+            { date: "2023-06-20", event: "Offer sent" },
+        ]
     },
     {
         id: 3,
@@ -43,6 +61,22 @@ const employees = [
         phone: "+1 234 567 892",
         photo: "/placeholder.svg?height=100&width=100",
         department: "Marketing",
+        history: [
+            { date: "2023-05-15", event: "Applied for Senior Developer position" },
+            { date: "2023-05-20", event: "Resume screened and approved" },
+            { date: "2023-05-25", event: "First interview scheduled" },
+            { date: "2023-06-01", event: "First interview completed - Positive feedback" },
+            { date: "2023-06-10", event: "Second interview scheduled" },
+            { date: "2023-06-15", event: "Second interview completed - Highly recommended" },
+            { date: "2023-06-20", event: "Offer sent" },
+            { date: "2023-05-15", event: "Applied for Senior Developer position" },
+            { date: "2023-05-20", event: "Resume screened and approved" },
+            { date: "2023-05-25", event: "First interview scheduled" },
+            { date: "2023-06-01", event: "First interview completed - Positive feedback" },
+            { date: "2023-06-10", event: "Second interview scheduled" },
+            { date: "2023-06-15", event: "Second interview completed - Highly recommended" },
+            { date: "2023-06-20", event: "Offer sent" },
+        ]
     },
     {
         id: 4,
@@ -53,6 +87,15 @@ const employees = [
         phone: "+1 234 567 893",
         photo: "/placeholder.svg?height=100&width=100",
         department: "Human Resources",
+        history: [
+            { date: "2023-05-15", event: "Applied for Senior Developer position" },
+            { date: "2023-05-20", event: "Resume screened and approved" },
+            { date: "2023-05-25", event: "First interview scheduled" },
+            { date: "2023-06-01", event: "First interview completed - Positive feedback" },
+            { date: "2023-06-10", event: "Second interview scheduled" },
+            { date: "2023-06-15", event: "Second interview completed - Highly recommended" },
+            { date: "2023-06-20", event: "Offer sent" },
+        ]
     },
 ];
 
@@ -168,6 +211,7 @@ export default function Dashboard() {
                                                         <TabsTrigger value="professional">Professional</TabsTrigger>
                                                         <TabsTrigger value="personal">Personal</TabsTrigger>
                                                         <TabsTrigger value="hr">HR Settings</TabsTrigger>
+                                                        
                                                     </TabsList>
                                                     <TabsContent value="professional">
                                                         <ProfessionalInfo />
@@ -182,52 +226,35 @@ export default function Dashboard() {
                                             </div>
                                         </div>
 
-                                        <div className="my-4">
+                                        <div className="mt-8">
                                             <button onClick={toggleHistory} className="flex items-center space-x-2 mt-4">
                                                 <span>{isHistoryOpen ? <ChevronLeft className="w-4 h-4 mr-2" /> : <History className="w-4 h-4 hover:text-blue-500" />}</span>
                                             </button>
                                         </div>
 
                                         {isHistoryOpen && (
-
-                                            <div className="w-1/3 mt-6 overflow-y-auto border-gray-100 border rounded-sm h-[90vh] p-6">
-                                                History
-                                                <div className="flex items-center space-x-4">
-                                                    <div className="overflow-hidden rounded-full" style={{ width: 40, height: 40 }}>
-                                                        <Image
-                                                            src="/employee.jpg"
-                                                            alt="Employee"
-                                                            width={40}
-                                                            height={40}
-                                                            className="object-cover"
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-xs text-gray-500">Mon 17 2024 | 4:20 pm</p>
-                                                        <p className="text-sm font-semibold">{employee.firstName} {employee.surname}</p>
-                                                        <p className="text-sm">A modifié poste : Software Engineer</p>
-                                                    </div>
-                                                </div>
-
-                                                <div className="flex items-center space-x-4 mt-4">
-                                                    <div className="overflow-hidden rounded-full" style={{ width: 40, height: 40 }}>
-                                                        <Image
-                                                            src="/employee.jpg"
-                                                            alt="Employee"
-                                                            width={40}
-                                                            height={40}
-                                                            className="object-cover"
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-xs text-gray-500">Mon 17 2024 | 4:20 pm</p>
-                                                        <p className="text-sm font-semibold">{employee.firstName} {employee.surname}</p>
-                                                        <p className="text-sm">Félicitations vous avez créé le salarié William Quesnot</p>
-                                                    </div>
-                                                </div>
-
-                                            </div>
+                                            <Card className="h-[90vh] mt-6">
+                                                <CardHeader>
+                                                    <CardTitle className="flex items-center">
+                                                        <Clock className="mr-2" />
+                                                        Candidate History
+                                                    </CardTitle>
+                                                </CardHeader>
+                                                <CardContent className="overflow-y-auto h-[calc(90vh-5rem)]"> {/* Ajustez la hauteur ici si nécessaire */}
+                                                    <ul className="space-y-4">
+                                                        {employee.history.map((event: any, index: any) => (
+                                                            <li key={index} className="border-l-2 border-primary pl-4 pb-4">
+                                                                <div className="flex flex-col">
+                                                                    <span className="text-sm text-muted-foreground">{event.date}</span>
+                                                                    <span className="font-medium">{event.event}</span>
+                                                                </div>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </CardContent>
+                                            </Card>
                                         )}
+
                                     </div>
                                 </SheetContent>
                             </Sheet>

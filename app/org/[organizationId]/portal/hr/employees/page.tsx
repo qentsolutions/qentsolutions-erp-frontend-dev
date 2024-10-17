@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import Image from "next/image";
-import { CalendarIcon, ChevronLeft, Clock, Globe, History, Mail, MapPin, Phone } from "lucide-react";
+import { CalendarDays, CalendarIcon, ChevronLeft, Clock, Download, Globe, History, Mail, MapPin, Paperclip, Phone, ReceiptText } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
@@ -16,6 +16,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
+import OrganizationalChart from "./components/organizationalChart";
 
 const employees = [
     {
@@ -64,6 +65,8 @@ export default function Dashboard() {
     const [selectedDepartment, setSelectedDepartment] = useState("All");
     const [searchTerm, setSearchTerm] = useState("");
     const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+    const [entryDate, setEntryDate] = useState("");
+
 
     const filteredEmployees = employees.filter(emp => {
         const isDepartmentMatch = selectedDepartment === "All" || emp.department === selectedDepartment;
@@ -245,6 +248,52 @@ export default function Dashboard() {
                                                                     </SelectContent>
                                                                 </Select>
                                                             </div>
+                                                            <div className="space-y-2">
+                                                                <Label>Contract</Label>
+                                                                <div className="grid grid-cols-2 gap-4">
+                                                                    <div className="flex items-center flex-col  space-y-4">
+                                                                        <div className="flex items-center w-full">
+                                                                            <ReceiptText className="mr-2 w-5 h-5 text-muted-foreground" />
+                                                                            <Select defaultValue="Type of contract">
+                                                                                <SelectTrigger>
+                                                                                    <SelectValue placeholder="Type of contract" />
+                                                                                </SelectTrigger>
+                                                                                <SelectContent>
+                                                                                    <SelectItem value="Full time">Full time</SelectItem>
+                                                                                    <SelectItem value="Part time">Part time</SelectItem>
+                                                                                    <SelectItem value="Internship">Internship</SelectItem>
+                                                                                </SelectContent>
+                                                                            </Select>
+                                                                        </div>
+
+                                                                        <div className="flex items-center w-full">
+                                                                            <CalendarDays className="mr-2 w-5 h-5 text-muted-foreground" />
+                                                                            <input
+                                                                                type="date"
+                                                                                id="entry-date"
+                                                                                value="12"
+                                                                                onChange={(e) => setEntryDate(e.target.value)}
+                                                                                className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1"
+                                                                            />
+                                                                        </div>
+
+                                                                        <div className="flex items-center w-full">
+                                                                            <Paperclip className="mr-2 w-5 h-5 text-muted-foreground" />
+
+                                                                            <label htmlFor="file-upload" className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1"
+                                                                            >
+                                                                                {"Attach the contract"}
+                                                                                <button className="shadow-sm px-2 border border-gray-100 rounded-lg">
+                                                                                    <span className="ml-2 text-muted-foreground flex items-center text-sm"><Download />Upload</span>
+                                                                                </button>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="flex w-full items-center overflow-y-auto h-72 justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
+                                                                        <OrganizationalChart centerOnEmployee="Eva" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </TabsContent>
                                                     <TabsContent value="personal">
@@ -293,9 +342,10 @@ export default function Dashboard() {
                                                 </Tabs>
                                             </div>
                                         </div>
+
                                         <div className="my-4">
                                             <button onClick={toggleHistory} className="flex items-center space-x-2 mt-4">
-                                                <span>{isHistoryOpen ? <ChevronLeft className="w-4 h-4" /> : <History className="w-4 h-4" />}</span>
+                                                <span>{isHistoryOpen ? <ChevronLeft className="w-4 h-4 mr-2" /> : <History className="w-4 h-4 hover:text-blue-500" />}</span>
                                             </button>
                                         </div>
 
@@ -314,6 +364,7 @@ export default function Dashboard() {
                                                         />
                                                     </div>
                                                     <div>
+                                                        <p className="text-xs text-gray-500">Mon 17 2024 | 4:20 pm</p>
                                                         <p className="text-sm font-semibold">{employee.firstName} {employee.surname}</p>
                                                         <p className="text-sm">A modifié poste : Software Engineer</p>
                                                     </div>
@@ -330,6 +381,7 @@ export default function Dashboard() {
                                                         />
                                                     </div>
                                                     <div>
+                                                        <p className="text-xs text-gray-500">Mon 17 2024 | 4:20 pm</p>
                                                         <p className="text-sm font-semibold">{employee.firstName} {employee.surname}</p>
                                                         <p className="text-sm">Félicitations vous avez créé le salarié William Quesnot</p>
                                                     </div>

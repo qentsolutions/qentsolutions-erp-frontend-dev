@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import LogoutButton from "./logout";
+import LogoutButton from "../../../../login/components/logout";
 
 const Navbar = () => {
   const router = useRouter();

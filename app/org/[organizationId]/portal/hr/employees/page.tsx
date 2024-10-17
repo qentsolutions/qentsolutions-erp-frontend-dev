@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProfessionalInfo from "./components/professional";
 import PersonalInfo from "./components/personal";
 import HrSettings from "./components/hrSettings";
+import HistoryEmployee from "./components/history";
 
 const employees = [
     {
@@ -207,11 +208,12 @@ export default function Dashboard() {
                                                 <Separator />
 
                                                 <Tabs defaultValue="professional" className="w-full">
-                                                    <TabsList className="grid w-full grid-cols-3">
+                                                    <TabsList className="grid w-full grid-cols-4">
                                                         <TabsTrigger value="professional">Professional</TabsTrigger>
                                                         <TabsTrigger value="personal">Personal</TabsTrigger>
                                                         <TabsTrigger value="hr">HR Settings</TabsTrigger>
-                                                        
+                                                        <TabsTrigger value="history">History</TabsTrigger>
+
                                                     </TabsList>
                                                     <TabsContent value="professional">
                                                         <ProfessionalInfo />
@@ -222,39 +224,12 @@ export default function Dashboard() {
                                                     <TabsContent value="hr">
                                                         <HrSettings />
                                                     </TabsContent>
+                                                    <TabsContent value="history">
+                                                        <HistoryEmployee />
+                                                    </TabsContent>
                                                 </Tabs>
                                             </div>
                                         </div>
-
-                                        <div className="mt-8">
-                                            <button onClick={toggleHistory} className="flex items-center space-x-2 mt-4">
-                                                <span>{isHistoryOpen ? <ChevronLeft className="w-4 h-4 mr-2" /> : <History className="w-4 h-4 hover:text-blue-500" />}</span>
-                                            </button>
-                                        </div>
-
-                                        {isHistoryOpen && (
-                                            <Card className="h-[90vh] mt-6">
-                                                <CardHeader>
-                                                    <CardTitle className="flex items-center">
-                                                        <Clock className="mr-2" />
-                                                        Candidate History
-                                                    </CardTitle>
-                                                </CardHeader>
-                                                <CardContent className="overflow-y-auto h-[calc(90vh-5rem)]"> {/* Ajustez la hauteur ici si nécessaire */}
-                                                    <ul className="space-y-4">
-                                                        {employee.history.map((event: any, index: any) => (
-                                                            <li key={index} className="border-l-2 border-primary pl-4 pb-4">
-                                                                <div className="flex flex-col">
-                                                                    <span className="text-sm text-muted-foreground">{event.date}</span>
-                                                                    <span className="font-medium">{event.event}</span>
-                                                                </div>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                </CardContent>
-                                            </Card>
-                                        )}
-
                                     </div>
                                 </SheetContent>
                             </Sheet>

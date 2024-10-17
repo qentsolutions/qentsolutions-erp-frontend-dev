@@ -123,14 +123,11 @@ export default function Dashboard() {
                                                     <AvatarFallback>{employee.firstName[0]}{employee.surname[0]}</AvatarFallback>
                                                 </Avatar>
                                                 <div>
-                                                    <h2 className="text-xl font-semibold">{employee.surname}, {employee.firstName}</h2>
+                                                    <h2 className="text-base font-semibold">{employee.surname}, {employee.firstName}</h2>
                                                     <p className="text-sm text-gray-600">{employee.jobTitle}</p>
                                                 </div>
                                             </div>
-                                            <div className="space-y-2">
-                                                <p className="text-sm"><strong>Email:</strong> {employee.email}</p>
-                                                <p className="text-sm"><strong>Phone:</strong> {employee.phone}</p>
-                                            </div>
+
                                         </CardContent>
                                     </Card>
                                 </SheetTrigger>
@@ -289,20 +286,293 @@ export default function Dashboard() {
                                                                             </label>
                                                                         </div>
                                                                     </div>
-                                                                    <div className="flex w-full items-center overflow-y-auto h-72 justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
+                                                                    <div className="relative flex w-full items-center overflow-y-auto h-72 justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
+                                                                        <div className="absolute z-50 top-2 left-2 text-md font-semibold">
+                                                                            Organizational chart
+                                                                        </div>
                                                                         <OrganizationalChart centerOnEmployee="Eva" />
                                                                     </div>
+
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </TabsContent>
-                                                    <TabsContent value="personal">
+                                                    <TabsContent value="personal" className="">
                                                         <div className="space-y-4 py-4">
-                                                            <p className="text-muted-foreground">Personal information content goes here.</p>
+                                                            <div className="grid grid-cols-2 gap-4">
+                                                                {/* Postal Address */}
+                                                                <div>
+                                                                    <Label htmlFor="postal-address">Postal Address</Label>
+                                                                    <input
+                                                                        type="text"
+                                                                        id="postal-address"
+                                                                        placeholder="Enter postal address"
+                                                                        className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                    />
+                                                                </div>
+                                                                {/* Email Address */}
+                                                                <div>
+                                                                    <Label htmlFor="email-address">Email Address</Label>
+                                                                    <input
+                                                                        type="email"
+                                                                        id="email-address"
+                                                                        placeholder="Enter email address"
+                                                                        className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                    />
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="grid grid-cols-2 gap-4">
+                                                                {/* Phone Number */}
+                                                                <div>
+                                                                    <Label htmlFor="phone-number">Phone Number</Label>
+                                                                    <input
+                                                                        type="tel"
+                                                                        id="phone-number"
+                                                                        placeholder="Enter phone number"
+                                                                        className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                    />
+                                                                </div>
+                                                                {/* Date of Birth */}
+                                                                <div>
+                                                                    <Label htmlFor="date-of-birth">Date of Birth</Label>
+                                                                    <input
+                                                                        type="date"
+                                                                        id="date-of-birth"
+                                                                        className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                    />
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="grid grid-cols-2 gap-4">
+                                                                {/* Place of Birth */}
+                                                                <div>
+                                                                    <Label htmlFor="place-of-birth">Place of Birth</Label>
+                                                                    <input
+                                                                        type="text"
+                                                                        id="place-of-birth"
+                                                                        placeholder="Enter place of birth"
+                                                                        className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                    />
+                                                                </div>
+                                                                {/* Education */}
+                                                                <div>
+                                                                    <Label htmlFor="education">Education</Label>
+                                                                    <input
+                                                                        type="text"
+                                                                        id="education"
+                                                                        placeholder="Enter education level"
+                                                                        className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                    />
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="grid grid-cols-2 gap-4">
+                                                                {/* Family Situation */}
+                                                                <div>
+                                                                    <Label htmlFor="family-situation">Family Situation</Label>
+                                                                    <input
+                                                                        type="text"
+                                                                        id="family-situation"
+                                                                        placeholder="Enter family situation"
+                                                                        className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                    />
+                                                                </div>
+                                                                {/* Number of Children */}
+                                                                <div>
+                                                                    <Label htmlFor="children">Number of Children to Charge</Label>
+                                                                    <input
+                                                                        type="number"
+                                                                        id="children"
+                                                                        placeholder="Enter number of children"
+                                                                        className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                    />
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="grid grid-cols-2 gap-4">
+                                                                {/* Emergency Contact */}
+                                                                <div>
+                                                                    <Label htmlFor="emergency-contact">Emergency Contact</Label>
+                                                                    <input
+                                                                        type="text"
+                                                                        id="emergency-contact"
+                                                                        placeholder="Enter emergency contact"
+                                                                        className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                    />
+                                                                </div>
+                                                                {/* Emergency Contact Phone Number */}
+                                                                <div>
+                                                                    <Label htmlFor="emergency-contact-phone">Emergency Contact Phone Number</Label>
+                                                                    <input
+                                                                        type="tel"
+                                                                        id="emergency-contact-phone"
+                                                                        placeholder="Enter emergency contact phone number"
+                                                                        className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                    />
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="grid grid-cols-2 gap-4">
+                                                                {/* Nationality */}
+                                                                <div>
+                                                                    <Label htmlFor="nationality">Nationality</Label>
+                                                                    <input
+                                                                        type="text"
+                                                                        id="nationality"
+                                                                        placeholder="Enter nationality"
+                                                                        className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                    />
+                                                                </div>
+                                                                {/* Visa Type */}
+                                                                <div>
+                                                                    <Label htmlFor="visa-type">Visa Type</Label>
+                                                                    <input
+                                                                        type="text"
+                                                                        id="visa-type"
+                                                                        placeholder="Enter visa type"
+                                                                        className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                    />
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="grid grid-cols-2 gap-4">
+                                                                {/* Issue Date */}
+                                                                <div>
+                                                                    <Label htmlFor="issue-date">Issue Date</Label>
+                                                                    <input
+                                                                        type="date"
+                                                                        id="issue-date"
+                                                                        className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                    />
+                                                                </div>
+                                                                {/* Expiration Date */}
+                                                                <div>
+                                                                    <Label htmlFor="expiration-date">Expiration Date</Label>
+                                                                    <input
+                                                                        type="date"
+                                                                        id="expiration-date"
+                                                                        className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                    />
+                                                                </div>
+                                                            </div>
+
+                                                            {/* Attachments (Visa Documents) */}
+                                                            <div className="flex items-center w-full">
+                                                                <Paperclip className="mr-2 w-5 h-5 text-muted-foreground" />
+                                                                <label htmlFor="file-upload" className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50">
+                                                                    {"Attach Visa Documents"}
+                                                                    <button className="shadow-sm px-2 border border-gray-100 rounded-lg">
+                                                                        <span className="ml-2 text-muted-foreground flex items-center text-sm"><Download />Upload</span>
+                                                                    </button>
+                                                                </label>
+                                                            </div>
                                                         </div>
                                                     </TabsContent>
+
                                                     <TabsContent value="hr">
-                                                        <div className="space-y-4 py-4">
+                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
+                                                            <div>
+                                                                <Label htmlFor="employeeType">Employee Type</Label>
+                                                                <Select>
+                                                                    <SelectTrigger>
+                                                                        <SelectValue placeholder="Select employee type" />
+                                                                    </SelectTrigger>
+                                                                    <SelectContent>
+                                                                        <SelectItem value="Full Time">Full Time</SelectItem>
+                                                                        <SelectItem value="Part Time">Part Time</SelectItem>
+                                                                        <SelectItem value="Internship">Internship</SelectItem>
+                                                                    </SelectContent>
+                                                                </Select>
+                                                            </div>
+
+                                                            <div>
+                                                                <Label htmlFor="linkUser">Link User</Label>
+                                                                <input
+                                                                    type="text"
+                                                                    id="linkUser"
+                                                                    placeholder="Enter linked user"
+                                                                    className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                />
+                                                            </div>
+
+                                                            <div>
+                                                                <Label htmlFor="annualSalary">Annual Gross Salary</Label>
+                                                                <input
+                                                                    type="number"
+                                                                    id="annualSalary"
+                                                                    placeholder="Enter annual gross salary"
+                                                                    className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                />
+                                                            </div>
+
+                                                            <div>
+                                                                <Label htmlFor="monthlySalary">Monthly Salary</Label>
+                                                                <input
+                                                                    type="number"
+                                                                    id="monthlySalary"
+                                                                    placeholder="Enter monthly salary"
+                                                                    className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                />
+                                                            </div>
+
+                                                            <div>
+                                                                <Label htmlFor="monthlySchedule">Monthly Schedule</Label>
+                                                                <input
+                                                                    type="text"
+                                                                    id="monthlySchedule"
+                                                                    placeholder="Enter monthly schedule"
+                                                                    className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                />
+                                                            </div>
+
+                                                            <div>
+                                                                <Label htmlFor="hourlyCost">Hourly Cost</Label>
+                                                                <input
+                                                                    type="number"
+                                                                    id="hourlyCost"
+                                                                    placeholder="Enter hourly cost"
+                                                                    className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                />
+                                                            </div>
+
+                                                            <div>
+                                                                <Label htmlFor="mutuelle">Mutuelle</Label>
+                                                                <Select>
+                                                                    <SelectTrigger>
+                                                                        <SelectValue placeholder="Yes or No" />
+                                                                    </SelectTrigger>
+                                                                    <SelectContent>
+                                                                        <SelectItem value="Yes">Yes</SelectItem>
+                                                                        <SelectItem value="No">No</SelectItem>
+                                                                    </SelectContent>
+                                                                </Select>
+                                                                <input
+                                                                    type="text"
+                                                                    id="mutuelleReason"
+                                                                    placeholder="If No, reason"
+                                                                    className="mt-2 flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                />
+                                                            </div>
+
+                                                            <div>
+                                                                <Label htmlFor="trialPeriodEnd">Trial Period (End Date)</Label>
+                                                                <Popover>
+                                                                    <PopoverTrigger asChild>
+                                                                        <Button
+                                                                            variant={"outline"}
+                                                                            className="w-full justify-start text-left font-normal"
+                                                                        >
+                                                                            <CalendarIcon className="mr-2 h-4 w-4" />
+                                                                            <span>Pick a date</span>
+                                                                        </Button>
+                                                                    </PopoverTrigger>
+                                                                    <PopoverContent className="w-auto p-0">
+                                                                        <Calendar />
+                                                                    </PopoverContent>
+                                                                </Popover>
+                                                            </div>
+
                                                             <div>
                                                                 <Label htmlFor="leaveValidator">Leave Validator</Label>
                                                                 <Select>
@@ -315,30 +585,41 @@ export default function Dashboard() {
                                                                     </SelectContent>
                                                                 </Select>
                                                             </div>
+
                                                             <div>
-                                                                <Label>Entry Date</Label>
-                                                                <Popover>
-                                                                    <PopoverTrigger asChild>
-                                                                        <Button
-                                                                            variant={"outline"}
-                                                                            className={cn(
-                                                                                "w-full justify-start text-left font-normal",
+                                                                <Label htmlFor="expenseReportValidator">Expense Report Validator</Label>
+                                                                <Select>
+                                                                    <SelectTrigger>
+                                                                        <SelectValue placeholder="Select expense report validator" />
+                                                                    </SelectTrigger>
+                                                                    <SelectContent>
+                                                                        <SelectItem value="John Doe">John Doe</SelectItem>
+                                                                        <SelectItem value="Jane Smith">Jane Smith</SelectItem>
+                                                                    </SelectContent>
+                                                                </Select>
+                                                            </div>
 
-                                                                            )}
-                                                                        >
-                                                                            <CalendarIcon className="mr-2 h-4 w-4" />
-                                                                            <span>Pick a date</span>
-                                                                        </Button>
-                                                                    </PopoverTrigger>
-                                                                    <PopoverContent className="w-auto p-0">
-                                                                        <Calendar
-
-                                                                        />
-                                                                    </PopoverContent>
-                                                                </Popover>
+                                                            <div className="col-span-2">
+                                                                <Label htmlFor="attachments">Attachments</Label>
+                                                                <div className="flex items-center space-x-2">
+                                                                    <Paperclip className="w-5 h-5 text-muted-foreground" />
+                                                                    <label
+                                                                        htmlFor="file-upload"
+                                                                        className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                                                                    >
+                                                                        {"Attach document"}
+                                                                        <button className="shadow-sm px-2 border border-gray-100 rounded-lg">
+                                                                            <span className="ml-2 text-muted-foreground flex items-center text-sm">
+                                                                                <Download />Upload
+                                                                            </span>
+                                                                        </button>
+                                                                    </label>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </TabsContent>
+
+
                                                 </Tabs>
                                             </div>
                                         </div>

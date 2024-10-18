@@ -8,6 +8,7 @@ import LeadNonClosed from "./components/LeadNonClosed";
 import LeadCostAnalytics from "./components/LeadCostAnalytics";
 import LeadLineChart from "./components/LeadBySource";
 import LeadStatusAnalytics from "./components/LeadStatusAnalytics";
+import { SalesReport } from "./components/SalesReport";
 
 const Home = () => {
     const [startDate, setStartDate] = useState(() => {
@@ -59,7 +60,7 @@ const Home = () => {
     };
 
     return (
-        <div className="w-full p-4 mx-auto space-y-4">
+        <div className="w-full p-4 mx-auto space-y-4 bg-gray-50">
             {/* Header with date pickers and buttons */}
             <div className="flex space-x-4 items-center justify-end">
                 <Button onClick={handleToday} className="btn bg-white text-black border shadow-sm border-gray-200 hover:bg-gray-200">
@@ -131,6 +132,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+            <SalesReport />
         </div>
     );
 };

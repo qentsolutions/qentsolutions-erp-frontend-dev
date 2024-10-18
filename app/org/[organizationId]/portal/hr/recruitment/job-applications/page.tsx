@@ -176,14 +176,14 @@ export default function JobApplications() {
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {Object.values(filteredColumns).map((column) => (
-                        <div key={column.id} className="bg-background p-4 rounded-lg shadow">
+                        <div key={column.id} className="bg-white p-4 rounded-lg shadow">
                             <h2 className="text-xl font-semibold mb-4">{column.title}</h2>
                             <Droppable droppableId={column.id}>
                                 {(provided, snapshot) => (
                                     <div
                                         {...provided.droppableProps}
                                         ref={provided.innerRef}
-                                        className={`space-y-4 min-h-[200px] ${snapshot.isDraggingOver ? 'bg-blue-100' : ''}`}
+                                        className={`space-y-4 min-h-[200px] ${snapshot.isDraggingOver ? 'bg-blue-100 rounded-lg' : ''}`}
                                     >
                                         {column.candidates.map((candidate, index) => (
                                             <Draggable

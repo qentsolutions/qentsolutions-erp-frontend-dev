@@ -20,6 +20,7 @@ const Navbar = () => {
   const params = useParams();
   const organizationId = params.organizationId; // Récupérer organizationId depuis l'URL
   const isRecruitmentPath = pathname.includes("recruitment"); // Vérifier si le chemin inclut "recruitment"
+  const isLeadsPath = pathname.includes("leads"); // Vérifier si le chemin inclut "recruitment"
 
   const handleSignOut = async () => {
     try {
@@ -70,9 +71,39 @@ const Navbar = () => {
             </Link>
           </div>
         )}
+        {isLeadsPath && (
+          <div className="flex gap-4">
+            <Link
+              href={`/org/${organizationId}/portal/sales/leads`}
+              className={`text-sm font-medium hover:text-blue-600 ${isActiveLink(`/org/${organizationId}/portal/sales/leads`) ? 'text-blue-500' : ''}`}
+            >
+              Overview
+            </Link>
+            <Link
+              href={`/org/${organizationId}/portal/hr/recruitment/job-offers`}
+              className={`text-sm font-medium hover:text-blue-600 ${isActiveLink(`/org/${organizationId}/portal/hr/recruitment/job-offers`) ? 'text-blue-500' : ''}`}
+            >
+              List
+            </Link>
+            <Link
+              href={`/org/${organizationId}/portal/hr/recruitment/job-applications`}
+              className={`text-sm font-medium hover:text-blue-600 ${isActiveLink(`/org/${organizationId}/portal/hr/recruitment/job-applications`) ? 'text-blue-500' : ''}`}
+            >
+              Job Applications
+            </Link>
+            <Link
+              href={`/org/${organizationId}/portal/hr/recruitment/candidates`}
+              className={`text-sm font-medium hover:text-blue-600 ${isActiveLink(`/org/${organizationId}/portal/hr/recruitment/candidates`) ? 'text-blue-500' : ''}`}
+            >
+              Candidates
+            </Link>
+          </div>
+        )}
       </div>
 
-      {/* Icons */}
+
+
+
       <div className="flex items-center">
         <Link href="/settings" className={`h-min w-min rounded p-2 hover:bg-gray-100`}>
           <Settings className="h-6 w-6 cursor-pointer dark:text-white" />

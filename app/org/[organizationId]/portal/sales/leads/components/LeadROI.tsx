@@ -21,29 +21,39 @@ export default function LeadROI({ startDate, endDate }: LeadROIProps) {
   const [leadROI, setLeadROI] = useState<number>(0);
 
   useEffect(() => {
-    const fetchLeadData = async () => {
-      try {
-        const response = await fetch("/api/leads");
-        if (!response.ok) {
-          throw new Error("Error fetching lead data");
-        }
-        const data: Lead[] = await response.json();
-        setLeadData(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching lead data:", error);
-        setLoading(false);
-      }
-    };
+    const mockLeadData: Lead[] = [
+      {
+        createdAt: "2024-10-01T10:00:00Z",
+        cost: 500,
+        proposedprice: [
+          { price: 800, closed: true, createdAt: "2024-10-05T12:00:00Z" },
+        ],
+      },
+      {
+        createdAt: "2024-10-10T09:00:00Z",
+        cost: 300,
+        proposedprice: [
+          { price: 600, closed: false, createdAt: "2024-10-12T14:00:00Z" },
+        ],
+      },
+      {
+        createdAt: "2024-10-15T15:30:00Z",
+        cost: 200,
+        proposedprice: [
+          { price: 400, closed: true, createdAt: "2024-10-20T10:00:00Z" },
+        ],
+      },
+    ];
 
-    fetchLeadData();
+    setLeadData(mockLeadData);
+    setLoading(false);
   }, []);
 
   useEffect(() => {
     if (leadData.length > 0) {
       const start = new Date(startDate);
       const end = new Date(endDate);
-      end.setHours(23, 59, 59, 999); // Include the end date completely
+      end.setHours(23, 59, 59, 999); // Inclut toute la journée de fin
 
       let totalCost = 0;
       let totalRevenue = 0;
@@ -65,7 +75,6 @@ export default function LeadROI({ startDate, endDate }: LeadROIProps) {
       setLeadCostTotal(totalCost);
       setLeadRevenueTotal(totalRevenue);
 
-      // Calcul du ROI
       const roi =
         totalCost !== 0 ? ((totalRevenue - totalCost) / totalCost) * 100 : 0;
       setLeadROI(roi);

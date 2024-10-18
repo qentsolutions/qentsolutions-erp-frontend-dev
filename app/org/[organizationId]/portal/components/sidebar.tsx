@@ -164,11 +164,11 @@ export const Sidebar = ({ isCollapsed, onToggle }: { isCollapsed: boolean; onTog
                 {activeModule === "Sales" && (
                     <Link
                         href={`/org/${organizationId}/portal/sales/leads`}
-                        className={`flex items-center p-2 rounded hover:bg-gray-200 transition duration-200 ${activeSubMenu === "Leads" ? 'text-blue-500' : 'text-gray-800'}`}
-                        onClick={() => handleSubMenuSelect("Leads")}
+                        className={`flex items-center p-2 rounded hover:text-blue-500 transition duration-200 ${activeSubMenu === "Leads" ? 'text-blue-500 bg-blue-50' : 'text-gray-800'}`}
+                        onClick={() => { handleSubMenuSelect("Leads"); setActiveMainMenu(null); }} // Réinitialiser le menu principal si un sous-menu est sélectionné
                     >
-                        <Users2Icon />
-                        <span className={` block ml-4 ${isCollapsed ? 'hidden' : 'block'}`}>Leads</span>
+                        <Briefcase />
+                        <span className={`ml-4 block text-gray-800 ${isCollapsed ? 'hidden' : 'block'}`}>Leads</span>
                     </Link>
                 )}
                 {activeModule === "Finance" && (

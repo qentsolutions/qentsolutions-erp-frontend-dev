@@ -28,22 +28,30 @@ export default function LeadNonClosed({
     useState<number>(0);
 
   useEffect(() => {
-    const fetchLeadData = async () => {
-      try {
-        const response = await fetch("/api/leads");
-        if (!response.ok) {
-          throw new Error("Error fetching lead data");
-        }
-        const data: Lead[] = await response.json();
-        setLeadData(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching lead data:", error);
-        setLoading(false);
-      }
-    };
+    const mockLeadData: Lead[] = [
+      {
+        createdAt: "2024-09-15T10:00:00Z",
+        proposedprice: [
+          { price: 1000, closed: false, createdAt: "2024-09-16T12:00:00Z" },
+          { price: 500, closed: true, createdAt: "2024-09-20T14:00:00Z" },
+        ],
+      },
+      {
+        createdAt: "2024-09-25T09:00:00Z",
+        proposedprice: [
+          { price: 1500, closed: false, createdAt: "2024-09-28T11:00:00Z" },
+        ],
+      },
+      {
+        createdAt: "2024-10-05T15:30:00Z",
+        proposedprice: [
+          { price: 800, closed: false, createdAt: "2024-10-10T10:00:00Z" },
+        ],
+      },
+    ];
 
-    fetchLeadData();
+    setLeadData(mockLeadData);
+    setLoading(false);
   }, []);
 
   useEffect(() => {
